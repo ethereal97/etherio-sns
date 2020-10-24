@@ -132,6 +132,7 @@ router.get("/", async (req, res) => {
             email: user.email,
             updatedAt: user.updatedAt,
             createdAt: user.createdAt
+        };
     });
     res.end();
 });
