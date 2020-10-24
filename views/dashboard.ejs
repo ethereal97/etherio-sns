@@ -16,13 +16,16 @@
         </h2>
 
         <button class="button" onclick="account.delete()">Delete this account</button>
+        <a class="button button-outline" href="/users/logout">Logout</a>
     </div>
 
     <% if (permission >= 8) { %>
     <div class="container">
         <ul id="list-users"></ul>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script>
+        window.onload = () => eruda.init();
         fetch("/users")
             .then(res => {
                 if (res.status !== 200) {
@@ -40,10 +43,17 @@
 
         function listUser({ permission, _id, username, fullname, email }) {
             let li = document.createElement("li");
+            let del = document.createElement("button");
 
             li.setAttribute('data-id', _id);
-            
+        
             li.innerHTML = `<a href="mailto:${email}">${fullname}</a> (${username})`;
+
+            del.onclick = () => {
+                account.delete(_id);
+            };
+            del.innerText = 'Delete';
+            li.appendChild(del);
 
             document.getElementById("list-users").appendChild(li);
         }
@@ -51,12 +61,15 @@
     <% } %>
     <script>
         const account = {
-            async delete() {
+            async delete(id) {
                 if (!confirm('Are you sure to delete this account? This cannot be undone.')) {
                     return;
                 }
+                let url = '/users';
 
-                let response = await fetch('/users', {
+                if (id) url += '/' + id;
+
+                let response = await fetch(url, {
                     method: "DELETE",
                     headers: {
                         cookie: document.cookie
@@ -72,6 +85,8 @@
                 alert(response);
             }
         }
+
+        window.app = app;
     </script>
 </body>
 

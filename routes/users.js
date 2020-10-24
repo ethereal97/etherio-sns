@@ -108,7 +108,7 @@ router.post("/register", async(req, res) => {
 //* <ALL> /users/logout
 router.all("/logout", (req, res) => {
     req.session.logged = null;
-    res.redirect("/user/login");
+    res.redirect("/users/login");
 });
 
 //* GET /users
@@ -151,5 +151,25 @@ router.delete("/", async(req, res) => {
         res.status(500).send(err.message).end();
     }
 });
+
+//* DELETE /users/:_id
+router.delete("/:_id", async(req, res) => {
+    if (!req.session.logged) {
+        return res.status(401).end();
+    }
+    let { permission } = req.session.logged;
+
+    if (permission < 8) return res.status(403).end();
+    
+    let { _id } = req.params;
+
+    try {
+        let response = await User.findOneAndDelete({ _id });
+        res.status(202).end();
+    } catch (err) {
+        res.status(500).send(err.message).end();
+    }
+});
+
 
 module.exports = router;
