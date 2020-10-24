@@ -7,9 +7,15 @@ app.bodyParser = {
 };
 
 app.session = {
-    secret: "keyboard cat",
     cookie: {},
 };
+
+app.session.secret = process.env.COOKIE_SECRET || "keyboard cat";
+
+app.session.saveUninitialized = true;
+
+app.session.proxy = true;
+app.session.resave = true;
 
 if (process.env.NODE_ENV === "production") {
     app.session.secure = true;
