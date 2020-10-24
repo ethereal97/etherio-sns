@@ -133,7 +133,7 @@ router.get("/", async (req, res) => {
             updatedAt: user.updatedAt,
             createdAt: user.createdAt
         };
-    });
+    }));
     res.end();
 });
 
