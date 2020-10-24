@@ -129,7 +129,7 @@ router.get("/", async (req, res) => {
             id: user._id,
             fullname: user.fullname,
             username: user.username,
-            email; user.email,
+            email: user.email,
             updatedAt: user.updatedAt,
             createdAt: user.createdAt
     });
