@@ -1,0 +1,34 @@
+{
+    "name": "project-01",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "dev": "env NODE_ENV=development nodemon",
+        "start": "env NODE_ENV=production npm run server",
+        "server": "node server"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cookie-parser": "^1.4.5",
+        "ejs": "^3.1.5",
+        "express": "^4.17.1",
+        "express-session": "^1.17.1",
+        "mongoose": "^5.10.10",
+        "password-hash": "^1.2.2"
+    },
+    "devDependencies": {
+        "dotenv": "^8.2.0",
+        "nodemon": "^2.0.6"
+    },
+    "nodemonConfig": {
+        "exec": "npm run server",
+        "ignore": [
+            "public/**",
+            "views/**"
+        ]
+    }
+}

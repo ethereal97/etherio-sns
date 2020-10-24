@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://etherio.github.io/cdn/normalize/normalize.css">
+    <link rel="stylesheet" href="https://etherio.github.io/cdn/milligram/milligram.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Welcome back,
+            <b><%= fullname %>!</b>
+        </h2>
+
+        <button class="button" onclick="account.delete()">Delete this account</button>
+    </div>
+
+    <script>
+        const account = {
+            async delete() {
+                if (!confirm('Are you sure to delete this account? This cannot be undone.')) {
+                    return;
+                }
+
+                let response = await fetch('/users', {
+                    method: "DELETE",
+                    headers: {
+                        cookie: document.cookie
+                    }
+                });
+
+                if (response.status === 202) {
+                    return location.reload();
+                }
+
+                response = await response.text();
+
+                alert(response);
+            }
+        }
+    </script>
+</body>
+
+</html>
