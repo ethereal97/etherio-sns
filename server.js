@@ -25,7 +25,10 @@ app.use(cookieParser());
 app.use("/users", require("./routes/users"));
 
 app.get("/", (req, res) => {
-    res.json(req.session).end();
+    if (!req.session.logged) {
+        return res.redirect("/users/login");
+    }
+    return res.redirect("/dashboard");
 });
 
 app.get("/dashboard", (req, res) => {

@@ -18,6 +18,37 @@
         <button class="button" onclick="account.delete()">Delete this account</button>
     </div>
 
+    <% if (permission >= 8) { %>
+    <div class="container">
+        <ul id="list-users"></ul>
+    </div>
+    <script>
+        fetch("/users")
+            .then(res => {
+                if (res.status !== 200) {
+                    res.text().then(res => {
+                        throw res;
+                     });
+                }
+                return res.json();
+            })
+            .then(users => {
+                users.forEach(user => {
+                    listUser(user);
+                })
+            });
+
+        function listUser({ permission, _id, username, fullname, email }) {
+            let li = document.createElement("li");
+
+            li.setAttribute('data-id', _id);
+            
+            li.innerHTML = `<a href="mailto:${email}">${fullname}</a> (${username})`;
+
+            document.getElementById("list-users").appendChild(li);
+        }
+    </script>
+    <% } %>
     <script>
         const account = {
             async delete() {

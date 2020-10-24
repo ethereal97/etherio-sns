@@ -14,6 +14,7 @@ router.get("/login", (req, res) => {
     res.render("login");
 });
 
+//* POST /users/login
 router.post("/login", async(req, res) => {
     const { username, password } = req.body;
     const errors = [];
@@ -49,6 +50,7 @@ router.get("/register", (req, res) => {
     res.render("register");
 });
 
+//* POST /users/register
 router.post("/register", async(req, res) => {
     const { fullname, username, password, password_confirm, email } = req.body;
     const errors = [];
@@ -103,11 +105,38 @@ router.post("/register", async(req, res) => {
     }
 });
 
-router.get("/logout", (req, res) => {
+//* <ALL> /users/logout
+router.all("/logout", (req, res) => {
     req.session.logged = null;
     res.redirect("/user/login");
 });
 
+//* GET /users
+router.get("/", async (req, res) => {
+    if (!req.session.logged) {
+        return res.status(401).redirect("/users/login");
+    }
+    let { permission } = req.session.logged;
+    if (permission < 8) {
+        return res.status(403).redirect("/");
+    }
+    let users = await User.find();
+
+    res.json(users.map(user => {
+        return {
+            permission: user.permission,
+            _id: user._id,
+            id: user._id,
+            fullname: user.fullname,
+            username: user.username,
+            email; user.email,
+            updatedAt: user.updatedAt,
+            createdAt: user.createdAt
+    });
+    res.end();
+});
+
+//* DELETE /users
 router.delete("/", async(req, res) => {
     if (!req.session.logged) {
         return res.status(401).end();
