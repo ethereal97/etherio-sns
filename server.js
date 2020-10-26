@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 const configs = require("./configs");
-const { render } = require("ejs");
+const { join } = require("path");
 
 const app = express();
 
@@ -22,6 +22,8 @@ app.use(session(configs.app.session));
 app.use(bodyParser.urlencoded(configs.app.bodyParser));
 app.use(cookieParser());
 
+app.use("/css", express.static(join(__dirname, 'public', "css")));
+app.use("/js", express.static(join(__dirname, 'public', "js")));
 app.use("/users", require("./routes/users"));
 
 app.get("/", (req, res) => {

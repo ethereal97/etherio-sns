@@ -7,10 +7,12 @@
     <title>Register</title>
     <link rel="stylesheet" href="https://etherio.github.io/cdn/normalize/normalize.css">
     <link rel="stylesheet" href="https://etherio.github.io/cdn/milligram/milligram.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
     <div class="container">
+
         <form action="/users/register" method="POST">
             <fieldset>
                 <h2>Create an account</h2>
@@ -29,13 +31,8 @@
 
                 <label for="email">Email Address</label>
                 <input type="text" name="email" id="email" placeholder="Email Address" autocapitalize="off" value="<%= typeof email !== 'undefined' ? email : '' %>">
-
-                <button type="submit">Create</button>
-            </fieldset>
-        </form>
-
         <% if (typeof errors !== 'undefined') {%>
-            <ul>
+            <ul id="error-message">
                 <% errors.map(error => { %>
                     <li>
                         <%= error %>
@@ -43,6 +40,12 @@
                     <% }) %>
             </ul>
             <% } %>
+
+
+                <button type="submit">Create</button>
+                <a href="/users/login" class="button button-outline">Back to login</a>
+            </fieldset>
+        </form>
 
     </div>
 </body>

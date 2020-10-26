@@ -7,6 +7,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="https://etherio.github.io/cdn/normalize/normalize.css">
     <link rel="stylesheet" href="https://etherio.github.io/cdn/milligram/milligram.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
@@ -27,7 +28,7 @@
         </form>
 
         <% if (typeof errors !== 'undefined') {%>
-            <ul>
+            <ul id="error-message">
                 <% errors.map(error => { %>
                     <li>
                         <%= error %>

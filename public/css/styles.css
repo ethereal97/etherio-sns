@@ -1,0 +1,14 @@
+#error-message {
+    color: rgb(255, 255, 255);
+    font-weight: 400;
+    font-size: 1rem;
+    border: 2px solid rgb(255, 40, 120);
+    border-radius: 5px;
+    background: rgb(200, 60, 80);
+    padding: 5px 10px;
+}
+
+#error-message li {
+    padding-top: 1px;
+    margin: 0;
+}
